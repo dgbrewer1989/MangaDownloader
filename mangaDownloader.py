@@ -1,8 +1,10 @@
+#!/usr/bin/env python3
+
 import sys, os, json, subprocess
 from os import system
 from typing import NamedTuple
 
-ADDITIONAL_OPTIONS = '-z -W --wait-after-page 5 --max-threads 1'
+ADDITIONAL_OPTIONS = '-z -W --wait-after-page 5 --max-threads 4'
 MANGA_LIST_FILE = './mangaList.json'
 MANGA_DOWNLOAD_PATH = 'C:\\Users\\bette\\Desktop'
 
@@ -20,7 +22,7 @@ def runScanner():
                 return
             for i in jsonObj:
                 try:
-                    subprocess.run(f"manga-py {i['url']} --name \"{i['name']}\" -d {MANGA_DOWNLOAD_PATH} {ADDITIONAL_OPTIONS}", check = True)
+                    subprocess.run(f"manga-py {i['url']} --name \"{i['name']}\" -d {MANGA_DOWNLOAD_PATH} {ADDITIONAL_OPTIONS}", check = True, shell=True)
                 except AttributeError as f:
                     print(f"Unable to download url {i['url']} and name {i['name']} through manga-py. specific AttributeError occured {(f)}")
                 except Exception as e:
@@ -46,12 +48,10 @@ def addmanga():
     loadAndAppendManga(newMangaToSave)
 
 def main_menu(argv):
-   
+
     if len(argv) == 2:
         exec_menu(argv[1])
     else:
-        os.system('clear')
-        
         print("Welcome,\n")
         print("Please choose the menu you want to start:")
         print("1. Add Manga")
@@ -63,7 +63,6 @@ def main_menu(argv):
     return
 
 def exec_menu(choice):
-    os.system('clear')
     ch = choice.lower()
     if ch == '':
         menu_actions['main_menu']([])
@@ -76,6 +75,7 @@ def exec_menu(choice):
     return
 
 def exit():
+    print("Exiting..")
     sys.exit()
 
 menu_actions = {
