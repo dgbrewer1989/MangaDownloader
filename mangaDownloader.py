@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 
 import sys, os, json, subprocess
+from subprocess import call
 from os import system
 from typing import NamedTuple
 
-ADDITIONAL_OPTIONS = '-z -W --wait-after-page 5 --max-threads 4'
+ADDITIONAL_OPTIONS = '--cbz --no-webp --wait-after-page 5 --max-threads 4'
 MANGA_LIST_FILE = './mangaList.json'
 MANGA_DOWNLOAD_PATH = 'C:\\Users\\bette\\Desktop'
 
@@ -22,11 +23,14 @@ def runScanner():
                 return
             for i in jsonObj:
                 try:
-                    subprocess.run(f"manga-py {i['url']} --name \"{i['name']}\" -d {MANGA_DOWNLOAD_PATH} {ADDITIONAL_OPTIONS}", check = True, shell=True)
+                    print(f"Downloading {i['name']} - {i['url']}")
+                    call(f"manga-py {i['url']} --name \"{i['name']}\" --destination {MANGA_DOWNLOAD_PATH} {ADDITIONAL_OPTIONS}", shell=True)
                 except AttributeError as f:
                     print(f"Unable to download url {i['url']} and name {i['name']} through manga-py. specific AttributeError occured {(f)}")
                 except Exception as e:
                     print(f"Unable to download url {i['url']} and name {i['name']} through manga-py. exception: {(e)} ")
+                print("Completed")
+                print(50 * '-')
     else:
         print(f"Error: {(MANGA_LIST_FILE)} file does not exist or is empty")
 
