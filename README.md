@@ -1,5 +1,5 @@
 # MangaDownloader
- Small Python 3 script that utilizes [manga-py](https://github.com/manga-py/manga-py, "manga-py") to download and maintain a list of manga series. As it is right now, this is soley used on a raspberry pi on my home network and runs via cron every few days.
+ Small Python 3 script that utilizes [manga-py](https://github.com/manga-py/manga-py "manga-py") to download and maintain a list of manga series. As it is right now, this is soley used on a raspberry pi on my home network and runs via cron every few days.
 
 ## Usage ##
 Currently from the main py file you can add a new entry to the JSON file used in this process, or run the checker to see if a new chapter exists for any series listed in the JSON file.
