@@ -41,3 +41,27 @@ ADDITIONAL_OPTIONS are specific manga-py parameters I've chosen, but they can be
 MANGA_LIST_FILE is the save location of the mangaList.json file which stores the name and URL of the manga being entered.
 
 MANGA_DOWNLOAD_PATH just marks where the downloaded chapters should go. Note: this is a root path. All items from the JSON file will be saved under that path in named folders.
+
+## Cron notes ##
+The code in this repo is made to be ran outside of a cron but if you plan to use this on a cronjob, here are a few notes about my experiences with setting this script up to be ran using a cron.
+
+# My own crontab setup
+```
+0 */12 * * * /usr/bin/python3 /home/pi/MangaDownloader/mangaDownloader.py 2 2>&1 >> /home/pi/MangaDownloader/`date +\
+%Y\%m\%d\%H\%M\%S`-cron.log
+```
+Ran once every 12 hours starting at 00:00, absolute path of python3 before calling the mangaDownloader file with "2" is the option at the menu so it will run through the mangaList.json file and check for updates. Beyond that `2>&1` redirects the error output to the same file as the info output (from my understanding) and just places that log file into a local directory with a timestamped cron log.
+
+
+# File paths and manga-py path need to be absolute
+
+```
+#file paths
+MANGA_LIST_FILE = '/home/pi/MangaDownloader/mangaList.json'
+MANGA_DOWNLOAD_PATH = "/media/pi/USB/share/manga"
+
+#manga-py absolute path
+call(f"/home/pi/.local/bin/manga-py {i['url']} --name \"{i['name']}\" -d {MANGA_DOWNLOAD_PATH} {ADDITIONAL_OPTIONS}", stderr=subprocess.STDOUT, shell=True)
+```
+
+In the `call` example above I also updated the `stderr` output to use `subprocess.STDOUT` so it would show up in the same log file as the rest of the output statements. 
