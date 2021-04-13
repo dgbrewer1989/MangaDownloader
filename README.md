@@ -45,7 +45,7 @@ MANGA_DOWNLOAD_PATH just marks where the downloaded chapters should go. Note: th
 ## Cron notes ##
 The code in this repo is made to be ran outside of a cron but if you plan to use this on a cronjob, here are a few notes about my experiences with setting this script up to be ran using a cron.
 
-# My own crontab setup
+###### My own crontab setup
 ```
 0 */12 * * * /usr/bin/python3 /home/pi/MangaDownloader/mangaDownloader.py 2 2>&1 >> /home/pi/MangaDownloader/`date +\
 %Y\%m\%d\%H\%M\%S`-cron.log
@@ -53,7 +53,7 @@ The code in this repo is made to be ran outside of a cron but if you plan to use
 Ran once every 12 hours starting at 00:00, absolute path of python3 before calling the mangaDownloader file with "2" is the option at the menu so it will run through the mangaList.json file and check for updates. Beyond that `2>&1` redirects the error output to the same file as the info output (from my understanding) and just places that log file into a local directory with a timestamped cron log.
 
 
-# File paths and manga-py path need to be absolute
+###### File paths and manga-py path need to be absolute
 
 ```
 #file paths
